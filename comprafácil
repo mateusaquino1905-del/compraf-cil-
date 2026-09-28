@@ -1,0 +1,15 @@
+from pathlib import Path
+p=Path("/mnt/data/comprafacil_v2.html")
+p.write_text(r'''<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CompraFácil V2</title>
+<style>body{font-family:Arial;margin:0;background:#f4f6f8;color:#222}header{background:#fff;padding:16px 5%;display:flex;gap:12px;align-items:center;box-shadow:0 2px 8px #0001}.logo{font-size:25px;font-weight:bold;color:#2563eb}button{padding:10px 14px;border:0;border-radius:9px;background:#2563eb;color:#fff;font-weight:bold;cursor:pointer}.wrap{padding:30px 5%}.panel{background:#fff;padding:22px;border-radius:15px;margin:18px 0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px}.card{background:#fff;padding:16px;border-radius:14px}.price{font-size:20px;font-weight:bold}input{padding:11px;width:100%;margin:6px 0 12px;box-sizing:border-box;border:1px solid #ddd;border-radius:8px}.hidden{display:none}.tabs button{margin-right:8px}</style></head>
+<body><header><div class="logo">CompraFácil</div><span style="flex:1">Marketplace</span><button onclick="show('login')">Entrar</button><button onclick="show('seller')">Vender</button><button onclick="show('cart')">🛒 Carrinho (<span id="count">0</span>)</button></header>
+<div class="wrap"><section id="home" class="panel"><h1>Compre e venda em um só lugar</h1><p>Marketplace com compradores e vendedores.</p><input id="search" placeholder="Buscar produtos..." oninput="render()"><div id="products" class="grid"></div></section>
+<section id="login" class="panel hidden"><h2>Entrar ou criar conta</h2><input placeholder="E-mail"><input type="password" placeholder="Senha"><div class="tabs"><button onclick="alert('Conta de comprador criada!')">Sou comprador</button><button onclick="show('seller')">Sou vendedor</button></div></section>
+<section id="seller" class="panel hidden"><h2>Painel do vendedor</h2><p>Publique seu primeiro produto.</p><input id="pn" placeholder="Nome do produto"><input id="pp" type="number" placeholder="Preço"><button onclick="add()">Publicar produto</button></section>
+<section id="cart" class="panel hidden"><h2>Meu carrinho</h2><p id="cartText">Seu carrinho está vazio.</p></section></div>
+<script>let ps=[['Smartphone',1299,'📱'],['Notebook',2499,'💻'],['Tênis esportivo',189,'👟'],['Fone Bluetooth',99,'🎧']],cart=0;
+function show(id){document.querySelectorAll('section').forEach(x=>x.classList.add('hidden'));document.getElementById(id).classList.remove('hidden')}
+function render(){let q=(search.value||'').toLowerCase();products.innerHTML=ps.filter(x=>x[0].toLowerCase().includes(q)).map(x=>`<div class="card"><div style="font-size:50px">${x[2]}</div><h3>${x[0]}</h3><div class="price">R$ ${x[1].toFixed(2).replace('.',',')}</div><button onclick="cart++;count.textContent=cart;cartText.textContent=cart+' produto(s) no carrinho.'">Adicionar</button></div>`).join('')}
+function add(){let n=pn.value,v=+pp.value;if(!n||!v)return alert('Preencha nome e preço.');ps.unshift([n,v,'📦']);pn.value=pp.value='';render();alert('Produto publicado!')}
+render();</script></body></html>''',encoding="utf-8")
+print(p)
